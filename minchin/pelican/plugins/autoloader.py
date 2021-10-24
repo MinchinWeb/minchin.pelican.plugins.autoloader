@@ -7,7 +7,6 @@ import semantic_version
 from pelican import __version__ as pelican_version
 from pelican import signals
 
-
 __title__ = "minchin.pelican.plugins.autoloader"
 __version__ = "0.1.0+dev.0"
 __description__ = "Pelican plug, used to auto-load my other plugins."
@@ -55,17 +54,27 @@ def initialize(pelican):
     if pelican_namespace_plugin_support():
         # only namespace plugins otherwise; Pelican 4.5.0 or newer
 
-        # imports here, as they won't exist in earlier versions of Pelican
-        from pelican.plugins._utils import get_namespace_plugins
-
         for ns in namespace_list:
             logger.debug("%s     %s" % (LOG_PREFIX, ns))
 
             ns_module = importlib.import_module(ns)
-            namespace_plugins = get_namespace_plugins(ns_module)
-            pelican.plugins.extend(list(namespace_plugins.values()))
-
-        pelican.init_plugins()
+            # this differs from Pelican's built-in namespace plugin finder, in
+            # that we don't require plugins to be their own modules
+            namespace_plugins = {
+                name: importlib.import_module(name)
+                for _, name, _ in pkgutil.iter_modules(
+                    ns_module.__path__, ns_module.__name__ + "."
+                )
+            }
+            for plugin_name, plugin_pkg in namespace_plugins.items():
+                logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
+                # manually register plugins
+                try:
+                    plugin_pkg.register()
+                except Exception as e:
+                    logger.error(
+                        "Cannot register plugin `%s`\n%s", plugin_pkg.__name__, e
+                    )
 
     else:
         if "PLUGINS" not in pelican.settings.keys():
@@ -74,13 +83,16 @@ def initialize(pelican):
         for ns in namespace_list:
             logger.debug("%s     %s" % (LOG_PREFIX, ns))
             ns_module = importlib.import_module(ns)
-            plugin_iter = pkgutil.iter_modules(ns_module.__path__, ns_module.__name__ + ".")
+            plugin_iter = pkgutil.iter_modules(
+                ns_module.__path__, ns_module.__name__ + "."
+            )
 
             for k in plugin_iter:
                 pelican.settings["PLUGINS"].append(k.name)
                 logger.debug('%s "%s" appended to PLUGINS' % (LOG_PREFIX, k.name))
         # force update of plugins
         pelican.init_plugins()
+
 
 def register():
     """Register the plugin with Pelican"""
