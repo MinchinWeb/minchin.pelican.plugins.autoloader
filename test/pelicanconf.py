@@ -1,4 +1,5 @@
 # from pelican.plugins import seafoam
+from minchin.pelican.plugins import autoloader
 
 # THEME = seafoam.get_path()
 # BOOTSTRAP_THEME = "seafoam"
@@ -14,6 +15,11 @@ OUTPUT_PATH = "output"
 #     # "pelican.plugins.jinja_filters",
 #     # "pelican.plugins.image_process",
 # ]
+
+if not autoloader.pelican_namespace_plugin_support():
+    PLUGINS = [
+        autoloader,
+    ]
 
 CACHE_CONTENT = False
 LOAD_CACHE_CONTENT = False

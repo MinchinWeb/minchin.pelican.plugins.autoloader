@@ -5,6 +5,8 @@ import pkgutil
 import semantic_version
 
 from pelican import __version__ as pelican_version
+from pelican import signals
+
 
 __title__ = "minchin.pelican.plugins.autoloader"
 __version__ = "0.1.0+dev.0"
@@ -70,10 +72,16 @@ def initialize(pelican):
             pelican.settings["PLUGINS"] = list()
 
         for ns in namespace_list:
-            plugin_iter = pkgutil.iter_modules(ns.__path__, ns.__name__ + ".")
+            logger.debug("%s     %s" % (LOG_PREFIX, ns))
+            ns_module = importlib.import_module(ns)
+            plugin_iter = pkgutil.iter_modules(ns_module.__path__, ns_module.__name__ + ".")
 
             for k in plugin_iter:
-                pelican.settings["PLUGINS"].append(k)
-                logger.debug('%s "%s" appended to PLUGINS' % (LOG_PREFIX, k))
+                pelican.settings["PLUGINS"].append(k.name)
+                logger.debug('%s "%s" appended to PLUGINS' % (LOG_PREFIX, k.name))
         # force update of plugins
         pelican.init_plugins()
+
+def register():
+    """Register the plugin with Pelican"""
+    signals.initialized.connect(initialize)

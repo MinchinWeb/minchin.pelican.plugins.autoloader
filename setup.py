@@ -75,6 +75,7 @@ EXTRA_REQUIRES = {
     ],
     "dev": [
         "markdown",
+        "minchin.pelican.plugins.nojekyll",
     ],
 }
 
