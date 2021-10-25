@@ -9,7 +9,7 @@ from pelican import signals
 
 __title__ = "minchin.pelican.plugins.autoloader"
 __version__ = "0.1.0+dev.3"
-__description__ = "Pelican plug, used to auto-load my other plugins."
+__description__ = "Pelican plugin, used to auto-load my other plugins."
 __author__ = "W. Minchin"
 __email__ = "w_minchin@hotmail.com"
 __url__ = "https://github.com/MinchinWeb/minchin.pelican.plugins.autoloader"
