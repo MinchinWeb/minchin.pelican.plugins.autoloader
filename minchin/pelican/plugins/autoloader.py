@@ -8,7 +8,7 @@ from pelican import __version__ as pelican_version
 from pelican import signals
 
 __title__ = "minchin.pelican.plugins.autoloader"
-__version__ = "0.1.0+dev.0"
+__version__ = "0.1.0+dev.3"
 __description__ = "Pelican plug, used to auto-load my other plugins."
 __author__ = "W. Minchin"
 __email__ = "w_minchin@hotmail.com"
@@ -43,55 +43,66 @@ def pelican_namespace_plugin_support():
         return False
 
 
-def initialize(pelican):
-    logger.debug("%s loading plugins in the selected namespaces." % LOG_PREFIX)
+def initialize(pelican_instance):
+    if "AUTOLOADER_SIGNAL_INITALIZED" not in pelican_instance.settings.keys():
+        logger.debug("%s loading plugins in the selected namespaces." % LOG_PREFIX)
 
-    if "AUTOLOADER_NAMESPACES" in pelican.settings:
-        namespace_list = pelican.settings["AUTOLOADER_NAMESPACES"]
-    else:
-        namespace_list = DEFAULT_NAMESPACE_LIST
+        if "AUTOLOADER_NAMESPACES" in pelican_instance.settings:
+            namespace_list = pelican_instance.settings["AUTOLOADER_NAMESPACES"]
+        else:
+            namespace_list = DEFAULT_NAMESPACE_LIST
 
-    if pelican_namespace_plugin_support():
-        # only namespace plugins otherwise; Pelican 4.5.0 or newer
+        if pelican_namespace_plugin_support():
+            # only namespace plugins otherwise; Pelican 4.5.0 or newer
 
-        for ns in namespace_list:
-            logger.debug("%s     %s" % (LOG_PREFIX, ns))
+            for ns in namespace_list:
+                logger.debug("%s     %s" % (LOG_PREFIX, ns))
 
-            ns_module = importlib.import_module(ns)
-            # this differs from Pelican's built-in namespace plugin finder, in
-            # that we don't require plugins to be their own modules
-            namespace_plugins = {
-                name: importlib.import_module(name)
-                for _, name, _ in pkgutil.iter_modules(
+                ns_module = importlib.import_module(ns)
+                # this differs from Pelican's built-in namespace plugin finder,
+                # in that we don't require plugins to be their own modules
+                namespace_plugins = {
+                    name: importlib.import_module(name)
+                    for _, name, _ in pkgutil.iter_modules(
+                        ns_module.__path__, ns_module.__name__ + "."
+                    )
+                }
+                for plugin_name, plugin_pkg in namespace_plugins.items():
+                    logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
+                    # manually register plugins
+                    try:
+                        plugin_pkg.register()
+                    except Exception as e:
+                        logger.error(
+                            "Cannot register plugin `%s`\n%s", plugin_pkg.__name__, e
+                        )
+
+        else:
+            if "PLUGINS" not in pelican_instance.settings.keys():
+                pelican_instance.settings["PLUGINS"] = list()
+
+            for ns in namespace_list:
+                logger.debug("%s     %s" % (LOG_PREFIX, ns))
+                ns_module = importlib.import_module(ns)
+                plugin_iter = pkgutil.iter_modules(
                     ns_module.__path__, ns_module.__name__ + "."
                 )
-            }
-            for plugin_name, plugin_pkg in namespace_plugins.items():
-                logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
-                # manually register plugins
-                try:
-                    plugin_pkg.register()
-                except Exception as e:
-                    logger.error(
-                        "Cannot register plugin `%s`\n%s", plugin_pkg.__name__, e
+
+                for k in plugin_iter:
+                    pelican_instance.settings["PLUGINS"].append(k.name)
+                    logger.debug(
+                        '%s         "%s" appended to PLUGINS' % (LOG_PREFIX, k.name)
                     )
+            # force update of plugins
+            pelican_instance.init_plugins()
 
+        pelican_instance.settings["AUTOLOADER_SIGNAL_INITALIZED"] = True
+        # needed, in case any of these plugins are calling the "initialized" signal
+        logger.debug("%s signal: initalized" % LOG_PREFIX)
+        signals.initialized.send(pelican_instance)
     else:
-        if "PLUGINS" not in pelican.settings.keys():
-            pelican.settings["PLUGINS"] = list()
-
-        for ns in namespace_list:
-            logger.debug("%s     %s" % (LOG_PREFIX, ns))
-            ns_module = importlib.import_module(ns)
-            plugin_iter = pkgutil.iter_modules(
-                ns_module.__path__, ns_module.__name__ + "."
-            )
-
-            for k in plugin_iter:
-                pelican.settings["PLUGINS"].append(k.name)
-                logger.debug('%s "%s" appended to PLUGINS' % (LOG_PREFIX, k.name))
-        # force update of plugins
-        pelican.init_plugins()
+        # avoid recurssion
+        pass
 
 
 def register():
