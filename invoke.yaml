@@ -1,0 +1,16 @@
+releaser:
+    module_name: minchin.pelican.plugins.autoloader
+    pypi_name: minchin.pelican.plugins.autoloader
+    here: .
+    docs: none
+    test: test
+    source: minchin
+    changelog: CHANGELOG.rst
+    version: minchin/pelican/plugins/autoloader.py
+    test_command: none
+    version_bump: none
+    extra_packages:
+        test:
+            - pelican
+            - setuptools
+        pypi:
