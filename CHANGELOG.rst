@@ -1,7 +1,7 @@
 AutoLoader Changelog
 ====================
 
-1.0.0 - 2021-10-24
+1.0.2 - 2021-10-24
 ------------------
 
 - **feature** original implementation

@@ -41,10 +41,8 @@ LICENSE = find_meta(*META_PATH, meta_key="license")
 
 PACKAGES = setuptools.find_namespace_packages(
     exclude=(
-        "vendor_src",
         "test",
         "docs",
-        "css_src",
     )
 )
 
@@ -108,7 +106,7 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10"
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3 :: Only",
     "Natural Language :: English",
     "Intended Audience :: Developers",

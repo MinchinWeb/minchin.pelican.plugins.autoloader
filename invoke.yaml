@@ -13,4 +13,6 @@ releaser:
         test:
             - pelican
             - setuptools
+            - wheel
+            - semantic-version
         pypi:
