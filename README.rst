@@ -2,12 +2,6 @@
 AutoLoader
 ==========
 
-|pypi|
-
-.. |pypi| image:: https://img.shields.io/pypi/v/minchin.pelican.plugins.autoloader.svg
-    :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader
-    :alt: PyPI Version
-
 ``AutoLoader`` is a plugin for `Pelican <http://docs.getpelican.com/>`_,
 a static site generator written in Python.
 
@@ -16,7 +10,24 @@ namespace (``minchin.pelican.plugins``). It can also be extended to autoload
 plugins in other namespaces, for example, to autoload the ``pelican.plugins``
 namespace on versions of Pelican before 4.5 (when autoloading to those plugins
 was added to the Pelican core).
-    
+
+.. image:: https://img.shields.io/pypi/v/minchin.pelican.plugins.autoloader.svg?style=flat
+    :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader
+    :alt: PyPI version number
+
+.. image:: https://img.shields.io/pypi/pyversions/minchin.pelican.plugins.autoloader?style=flat
+    :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader/
+    :alt: Supported Python version
+
+.. image:: https://img.shields.io/pypi/l/minchin.pelican.plugins.autoloader.svg?style=flat&color=green
+    :target: https://github.com/MinchinWeb/minchin.pelican.plugins.autoloader/blob/master/LICENSE
+    :alt: License
+
+.. image:: https://img.shields.io/pypi/dm/minchin.pelican.plugins.autoloader.svg?style=flat
+    :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader/
+    :alt: Download Count
+
+
 Installation
 ============
 
