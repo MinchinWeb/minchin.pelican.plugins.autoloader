@@ -15,6 +15,10 @@ was added to the Pelican core).
     :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader
     :alt: PyPI version number
 
+.. image:: https://img.shields.io/badge/-Changelog-success
+   :target: https://github.com/MinchinWeb/minchin.pelican.plugins.autoloader/blob/master/CHANGELOG.rst
+   :alt: Changelog
+
 .. image:: https://img.shields.io/pypi/pyversions/minchin.pelican.plugins.autoloader?style=flat
     :target: https://pypi.python.org/pypi/minchin.pelican.plugins.autoloader/
     :alt: Supported Python version
