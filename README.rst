@@ -73,11 +73,3 @@ Usage Notes
 
 - the plugins loaded by this plugin will not be shown when you run
   ``pelican-plugins``
-
-Known Issues
-============
-
-The release process (``minchin.releaser``) depends on ``invoke``, which has yet
-to release a version that will run on Python 3.10. Therefore, releases must be
-generated on Python 3.9 or earlier, but the code should otherwise run on Python
-3.10.

@@ -54,7 +54,7 @@ INSTALL_REQUIRES = [
 EXTRA_REQUIRES = {
     "build": [
         "pip-tools",
-        "minchin.releaser >= 0.8.0",
+        "minchin.releaser >= 0.8.2",
         # less, installed via npm  # npm install less -g
     ],
     "docs": [
