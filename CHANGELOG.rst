@@ -1,6 +1,8 @@
 AutoLoader Changelog
 ====================
 
+1.0.3 - 2022-03-20
+------------------
 
 - **support**: update to `minchin.releaser` 0.8.2, and thus officially support
   Python 3.10.

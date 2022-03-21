@@ -24,7 +24,7 @@ was added to the Pelican core).
     :alt: Supported Python version
 
 .. image:: https://img.shields.io/pypi/l/minchin.pelican.plugins.autoloader.svg?style=flat&color=green
-    :target: https://github.com/MinchinWeb/minchin.pelican.plugins.autoloader/blob/master/LICENSE
+    :target: https://github.com/MinchinWeb/minchin.pelican.plugins.autoloader/blob/master/LICENSE.txt
     :alt: License
 
 .. image:: https://img.shields.io/pypi/dm/minchin.pelican.plugins.autoloader.svg?style=flat
