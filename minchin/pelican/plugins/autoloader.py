@@ -19,6 +19,10 @@ LOG_PREFIX = "[AutoLoader]"
 DEFAULT_NAMESPACE_LIST = [
     "minchin.pelican.plugins",
 ]
+DEFAULT_PLUGIN_BLACKLIST = [
+    "pelican.plugins._utils",
+    "pelican.plugins.signals",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +56,13 @@ def initialize(pelican_instance):
         else:
             namespace_list = DEFAULT_NAMESPACE_LIST
 
+        if "AUTOLOADER_PLUGIN_BLACKLIST" in pelican_instance.settings:
+            namespace_blacklist = pelican_instance.settings[
+                "AUTOLOADER_PLUGIN_BLACKLIST"
+            ]
+        else:
+            namespace_blacklist = DEFAULT_PLUGIN_BLACKLIST
+
         if pelican_namespace_plugin_support():
             # only namespace plugins otherwise; Pelican 4.5.0 or newer
 
@@ -68,13 +79,21 @@ def initialize(pelican_instance):
                     )
                 }
                 for plugin_name, plugin_pkg in namespace_plugins.items():
-                    logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
+                    if plugin_name in namespace_blacklist:
+                        logger.debug(
+                            "%s         %s ... skipping!" % (LOG_PREFIX, plugin_name)
+                        )
+                        continue
+
                     # manually register plugins
+                    logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
                     try:
                         plugin_pkg.register()
                     except Exception as e:
                         logger.error(
-                            "Cannot register plugin `%s`\n%s", plugin_pkg.__name__, e
+                            "Cannot register plugin `%s`\n%s",
+                            plugin_pkg.__name__,
+                            e,
                         )
 
         else:

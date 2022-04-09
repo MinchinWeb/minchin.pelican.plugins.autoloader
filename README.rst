@@ -50,22 +50,41 @@ of plugins in your ``pelicanconf.py`` file:
 
 .. code-block:: python
 
+  # pelicanconf.py
+
   PLUGINS = [
       # ...
       'minchin.pelican.plugins.autoloader',
       # ...
   ]
 
-if you want to auto-load additional namespaces, you'll need to define the
+If you want to auto-load additional namespaces, you'll need to define the
 ``AUTOLOADER_NAMESPACES`` variable in your ``pelicanconf.py`` file:
 
 .. code-block:: python
+
+  # pelicanconf.py
 
   from minchin.pelican.plugins import autoloader
 
   AUTOLOADER_NAMESPACES = autoloader.DEFAULT_NAMESPACE_LIST + [
       "pelican.plugins",
       # other namespaces
+  ]
+
+If you need to disallow auto-loading of certain plugins, you'll need to define
+the ``AUTOLOADER_PLUGIN_BLACKLIST`` variable in your ``pelicanconf.py`` file.
+This only works when autoloading from defined namespaces. E.g.:
+
+.. code-block:: python
+
+  # pelicanconf.py
+
+  from minchin.pelican.plugins import autoloader
+
+  AUTOLOADER_PLUGIN_BLACKLIST = autoloader.DEFAULT_PLUGIN_BLACKLIST + [
+      "pelican.plugins.misbehaving_plugin",
+      # other plugins
   ]
 
 Usage Notes
