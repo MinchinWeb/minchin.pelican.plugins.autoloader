@@ -1,6 +1,14 @@
 AutoLoader Changelog
 ====================
 
+1.1.0 -- 2022-04-09
+-------------------
+
+- **feature**: allow autoloading of specificed plugins to be skipped via
+  `AUTOLOADER_PLUGIN_BLACKLIST` variable (on Pelican 4.5+ only).
+- **bug**: don't try and initialize `pelican.plugins._utils` or
+  `pelican.plugins.signals`
+
 1.0.3 - 2022-03-20
 ------------------
 
