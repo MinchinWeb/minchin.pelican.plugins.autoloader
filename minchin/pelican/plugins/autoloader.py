@@ -8,7 +8,7 @@ from pelican import __version__ as pelican_version
 from pelican import signals
 
 __title__ = "minchin.pelican.plugins.autoloader"
-__version__ = "1.2.0-dev"
+__version__ = "1.2.0"
 __description__ = "Pelican plugin, used to auto-load my other plugins."
 __author__ = "W. Minchin"
 __email__ = "w_minchin@hotmail.com"
