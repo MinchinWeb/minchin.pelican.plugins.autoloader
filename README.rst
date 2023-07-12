@@ -6,7 +6,8 @@ AutoLoader
 a static site generator written in Python.
 
 ``AutoLoader`` is designed to autoload the other Pelican plugins in my
-namespace (``minchin.pelican.plugins``). It can also be extended to autoload
+namespaces (``minchin.pelican.plugins`` and ``minchin.pelican.readers``).
+It can also be extended to autoload
 plugins in other namespaces, for example, to autoload the ``pelican.plugins``
 namespace on versions of Pelican before 4.5 (when autoloading to those plugins
 was added to the Pelican core).

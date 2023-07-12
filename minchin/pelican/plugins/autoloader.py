@@ -8,7 +8,7 @@ from pelican import __version__ as pelican_version
 from pelican import signals
 
 __title__ = "minchin.pelican.plugins.autoloader"
-__version__ = "1.1.1-dev"
+__version__ = "1.2.0-dev"
 __description__ = "Pelican plugin, used to auto-load my other plugins."
 __author__ = "W. Minchin"
 __email__ = "w_minchin@hotmail.com"
@@ -18,6 +18,7 @@ __license__ = "MIT License"
 LOG_PREFIX = "[AutoLoader]"
 DEFAULT_NAMESPACE_LIST = [
     "minchin.pelican.plugins",
+    "minchin.pelican.readers",
 ]
 DEFAULT_PLUGIN_BLACKLIST = [
     "pelican.plugins._utils",
