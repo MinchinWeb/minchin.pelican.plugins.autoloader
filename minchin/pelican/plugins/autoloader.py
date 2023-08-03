@@ -68,9 +68,14 @@ def initialize(pelican_instance):
             # only namespace plugins otherwise; Pelican 4.5.0 or newer
 
             for ns in namespace_list:
-                logger.debug("%s     %s" % (LOG_PREFIX, ns))
+                logger.debug("%s    %s" % (LOG_PREFIX, ns))
 
-                ns_module = importlib.import_module(ns)
+                try:
+                    ns_module = importlib.import_module(ns)
+                except ModuleNotFoundError:
+                    logger.debug("%s        Unable to load namespace '%s'." % (LOG_PREFIX, ns))
+                    continue
+
                 # this differs from Pelican's built-in namespace plugin finder,
                 # in that we don't require plugins to be their own modules
                 namespace_plugins = {
@@ -82,12 +87,12 @@ def initialize(pelican_instance):
                 for plugin_name, plugin_pkg in namespace_plugins.items():
                     if plugin_name in namespace_blacklist:
                         logger.debug(
-                            "%s         %s ... skipping!" % (LOG_PREFIX, plugin_name)
+                            "%s        %s ... skipping!" % (LOG_PREFIX, plugin_name)
                         )
                         continue
 
                     # manually register plugins
-                    logger.debug("%s         %s" % (LOG_PREFIX, plugin_name))
+                    logger.debug("%s    %s" % (LOG_PREFIX, plugin_name))
                     try:
                         plugin_pkg.register()
                     except Exception as e:
