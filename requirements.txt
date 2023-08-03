@@ -30,7 +30,7 @@ pytz==2023.3
     # via
     #   feedgenerator
     #   pelican
-rich==13.4.2
+rich==13.5.2
     # via pelican
 semantic-version==2.10.0
     # via minchin.pelican.plugins.autoloader (setup.py)
