@@ -53,9 +53,7 @@ PAGE_URL = "{slug}.html"
 PAGE_SAVE_AS = PAGE_URL
 
 
-MENUITEMS = (
-    ("Dev Blog", "https://blog.minchin.ca/"),
-)
+MENUITEMS = (("Dev Blog", "https://blog.minchin.ca/"),)
 
 DISPLAY_BREADCRUMBS = True
 DISPLAY_CATEGORY_IN_BREADCRUMBS = True

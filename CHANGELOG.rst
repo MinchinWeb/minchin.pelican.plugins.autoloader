@@ -1,6 +1,11 @@
 AutoLoader Changelog
 ====================
 
+1.2.1 -- 2023-08-03
+-------------------
+
+- **bug**: don't break if no plugins exist in the namespace you are trying to load from.
+
 1.2.0 -- 2023-07-11
 -------------------
 

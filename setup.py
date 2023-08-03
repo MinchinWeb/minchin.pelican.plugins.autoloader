@@ -75,6 +75,10 @@ EXTRA_REQUIRES = {
         "markdown",
         "minchin.pelican.plugins.nojekyll",
     ],
+    "lint": [
+        "black",
+        "isort",
+    ],
 }
 
 # full list of Classifiers at
@@ -87,7 +91,7 @@ CLASSIFIERS = [
     # 'Development Status :: 2 - Pre-Alpha',
     # 'Development Status :: 3 - Alpha',
     # "Development Status :: 4 - Beta",
-    'Development Status :: 5 - Production/Stable',
+    "Development Status :: 5 - Production/Stable",
     # 'Development Status :: 6 - Mature',
     # 'Development Status :: 7 - Inactive',
     "Environment :: Console",

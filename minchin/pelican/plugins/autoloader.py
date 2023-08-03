@@ -8,7 +8,7 @@ from pelican import __version__ as pelican_version
 from pelican import signals
 
 __title__ = "minchin.pelican.plugins.autoloader"
-__version__ = "1.2.1-dev"
+__version__ = "1.2.1"
 __description__ = "Pelican plugin, used to auto-load my other plugins."
 __author__ = "W. Minchin"
 __email__ = "w_minchin@hotmail.com"
@@ -73,7 +73,9 @@ def initialize(pelican_instance):
                 try:
                     ns_module = importlib.import_module(ns)
                 except ModuleNotFoundError:
-                    logger.debug("%s        Unable to load namespace '%s'." % (LOG_PREFIX, ns))
+                    logger.debug(
+                        "%s        Unable to load namespace '%s'." % (LOG_PREFIX, ns)
+                    )
                     continue
 
                 # this differs from Pelican's built-in namespace plugin finder,
