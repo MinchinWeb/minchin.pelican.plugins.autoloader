@@ -4,13 +4,16 @@ AutoLoader Changelog
 1.2.1 -- 2023-08-03
 -------------------
 
-- **bug**: don't break if no plugins exist in the namespace you are trying to load from.
+- **bug**: don't break if no plugins exist in the namespace you are trying to
+  load from.
 
 1.2.0 -- 2023-07-11
 -------------------
 
 - **feature**: include autoloading from additional "private" namespace of
   ``minchin.pelican.readers``.
+- **note**: this release has a bug that will crash if you're not using a plugin
+  in the ``minchin.pelican.readers`` namespace.
 
 1.1.0 -- 2022-04-09
 -------------------
